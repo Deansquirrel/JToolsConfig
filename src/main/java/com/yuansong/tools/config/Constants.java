@@ -4,6 +4,8 @@ import java.io.File;
 
 public class Constants {
 	
+	public static final String idCodeRemark = "唯一身份码";
+	
 	public static final String dbName = "config";
 	public static final String dbPath = "db";
 	

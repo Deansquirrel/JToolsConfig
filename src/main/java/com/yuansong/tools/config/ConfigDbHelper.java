@@ -45,7 +45,7 @@ class ConfigDbHelper {
 	
 	private String initSql_0_0_0_config = ""
 			+ "INSERT INTO config(name, val, description, last_update) "
-			+ "VALUES ('id', ?, '唯一身份码', ?); ";
+			+ "VALUES ('id', ?, ?, ?); ";
 	
 	private String createSql_0_0_0_log = ""
 			+ "DROP TABLE IF EXISTS 'log'; "
@@ -91,7 +91,7 @@ class ConfigDbHelper {
 		this.jdbcTemplate.update(this.createSql_0_0_0_log);
 		String curr = DateTool.GetDatetimeStr();
 		this.jdbcTemplate.update(initSql_0_0_0_version, new Object[] {currVersion, curr, curr});
-		this.jdbcTemplate.update(initSql_0_0_0_config, new Object[] {CommonTool.UUID(), curr});
+		this.jdbcTemplate.update(initSql_0_0_0_config, new Object[] {CommonTool.UUID(), Constants.idCodeRemark, curr});
 	}
 
 	/**

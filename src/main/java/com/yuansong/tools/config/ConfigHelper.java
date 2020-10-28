@@ -51,6 +51,12 @@ public interface ConfigHelper {
 	 * @param description
 	 */
 	public void saveConfig(String name, String val, String description);
+	
+	/**
+	 * 删除配置项
+	 * @param name
+	 */
+	public void removeConfig(String name);
 
 	/**
 	 * 获取配置项
@@ -120,6 +126,64 @@ public interface ConfigHelper {
 	 * @return
 	 */
 	public List<LogEntity> getLog(Date begTime, Date endTime, LogLevel level, String type);
+	
+	/**
+	 * 清理日志
+	 * @param id
+	 */
+	public void clearLog(long id);
+	/**
+	 * 清理日志
+	 * @param endTime
+	 */
+	public void clearLog(Date endTime);
+	/**
+	 * 清理日志
+	 * @param endTime
+	 * @param level
+	 */
+	public void clearLog(Date endTime, LogLevel level);
+	/**
+	 * 清理日志
+	 * @param endTime
+	 * @param type
+	 */
+	public void clearLog(Date endTime, String type);
+	/**
+	 * 清理日志
+	 * @param endTime
+	 * @param level
+	 * @param type
+	 */
+	public void clearLog(Date endTime, LogLevel level, String type);
+	/**
+	 * 清理日志
+	 * @param begTime
+	 * @param endTime
+	 */
+	public void clearLog(Date begTime, Date endTime);
+	/**
+	 * 清理日志
+	 * @param begTime
+	 * @param endTime
+	 * @param level
+	 */
+	public void clearLog(Date begTime, Date endTime, LogLevel level);
+	/**
+	 * 清理日志
+	 * @param begTime
+	 * @param endTime
+	 * @param type
+	 */
+	public void clearLog(Date begTime, Date endTime, String type);
+	/**
+	 * 清理日志
+	 * @param begTime
+	 * @param endTime
+	 * @param level
+	 * @param type
+	 */
+	public void clearLog(Date begTime, Date endTime, LogLevel level, String type);
 	
 	/**
 	 * 检查并初始化配置库
