@@ -52,7 +52,7 @@ public class ConfigHelperImpl implements ConfigHelper {
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(value="txManagerJToolsConfig")
 	public void saveConfig(String name, String val, String description) {
 		String sqlUpdate = ""
 				+ "UPDATE config SET val=?,description=?,last_update=? WHERE name= ? ";

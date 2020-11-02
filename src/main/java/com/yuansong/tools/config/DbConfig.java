@@ -41,12 +41,12 @@ class DbConfig {
 	}
 	
 	@Bean(name="jdbcTemplateJToolsConfig")
-	public JdbcTemplate jdbcTemplateFirst(@Qualifier("dataSourceJToolsConfig") DataSource ds) {
+	public JdbcTemplate jdbcTemplate(@Qualifier("dataSourceJToolsConfig") DataSource ds) {
 		return new JdbcTemplate(ds);
 	}
 	
 	@Bean(name="txManagerJToolsConfig")
-	public PlatformTransactionManager txManagerFirst(@Qualifier("dataSourceJToolsConfig") DataSource ds) {
+	public PlatformTransactionManager txManager(@Qualifier("dataSourceJToolsConfig") DataSource ds) {
 		return new DataSourceTransactionManager(ds);
 	}
 
