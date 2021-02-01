@@ -1,4 +1,4 @@
-package com.yuansong.tools.config;
+package com.yuansong.tools.config.his;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
