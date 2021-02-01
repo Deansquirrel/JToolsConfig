@@ -12,6 +12,10 @@ public interface IConnConfig {
 		if("".equals(this.getDbPath().trim())) {
 			return this.getDbName();
 		} else {
+			File file = new File(this.getDbPath());
+			if(!file.exists()) {
+				file.mkdirs();
+			}
 			return this.getDbPath().trim() + File.separator + this.getDbName().trim();
 		}
 	}

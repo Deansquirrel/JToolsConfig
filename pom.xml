@@ -1,10 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.4.RELEASE</version>
-  </parent>
   <groupId>com.yuansong.tools</groupId>
   <artifactId>tools-config</artifactId>
   <!--<version>0.0.2</version>-->
@@ -25,41 +20,43 @@
   </repositories>
  
   <dependencies>
-   <!--  <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
+  
+  <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.2.12.RELEASE</version>
+      <scope>compile</scope>
     </dependency>
-     -->
+
     <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter</artifactId>
-        <exclusions>
-            <exclusion>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-logging</artifactId>
-            </exclusion>
-        </exclusions>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>5.2.12.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>1.7.30</version>
+      <scope>compile</scope>
     </dependency>
     
     <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-log4j2</artifactId>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+      <version>1.1.21</version>
     </dependency>
-    <!-- 
+    
     <dependency>
-        <groupId>com.yuansong.tools</groupId>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.31.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.deansquirrel</groupId>
         <artifactId>tools-common</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
     </dependency>
-    
-    
-    <dependency>
-        <groupId>com.yuansong.tools</groupId>
-        <artifactId>tools-db</artifactId>
-        <version>0.0.1</version>
-    </dependency>
-	 -->
   </dependencies>
   
   <!-- 

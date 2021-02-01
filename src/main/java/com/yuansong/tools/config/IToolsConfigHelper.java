@@ -4,12 +4,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.lang.NonNull;
+
 import com.yuansong.tools.config.log.LogEntity;
 import com.yuansong.tools.config.log.LogLevel;
 
 public interface IToolsConfigHelper {
 	
-	public static final long version = 0L;
+	public static final long VERSION = 1L;
+	
+	public static final String CONN_NAME = "conn_config";
+	public static final String BEAN_JDBCTEMPLATE = "jdbcTemplateToolsConfig";
+	public static final String BEAN_TX_MANAGER = "txManagerToolsConfig";
+	public static final String KEY_CLIENT_ID = "clientId";
 	
 	public void checkAndInitConfigDb() throws Exception;
 	
@@ -21,21 +28,26 @@ public interface IToolsConfigHelper {
 	
 	/**
 	 * 更新客户端ID
-	 * @return
+	 * @param cliendId
 	 */
-	public String updateClientId();
+	public void updateClientId(String cliendId);
 	
 	public void saveConfig(String name, String val, String description);
 	default public void saveConfig(String name, String val) {
 		this.saveConfig(name, val, null);
 	}
 	
-	public String getConfig(String name);
+	public String getConfig(String name, String def);
+	default public String getConfig(String name) {
+		return this.getConfig(name, null);
+	};
+	
+	public void removeConfig(String name);
 	
 	public Map<String, String> getConfig();
 	
 	//===============================================
-	public void saveLog(LogLevel level, String type, String conent);
+	public void saveLog(LogLevel level, String type, String content);
 	public LogEntity getLog(long id);
 	
 	public List<LogEntity> getLog(Date begTime, Date endTime, LogLevel level, String type);
@@ -51,26 +63,26 @@ public interface IToolsConfigHelper {
 	}
 	
 	public void clearLog(long id);
-	public void clearLog(Date begTime, Date endTime, LogLevel level, String type);
-	default public void clearLog(Date endTime) {
+	public void clearLog(Date begTime, @NonNull Date endTime, LogLevel level, String type);
+	default public void clearLog(@NonNull Date endTime) {
 		this.clearLog(null, endTime, null, null);
 	}
-	default public void clearLog(Date endTime, LogLevel level) {
+	default public void clearLog(@NonNull Date endTime, @NonNull LogLevel level) {
 		this.clearLog(null, endTime, level, null);
 	}
-	default public void clearLog(Date endTime, String type) {
+	default public void clearLog(@NonNull Date endTime, @NonNull String type) {
 		this.clearLog(null, endTime, null, type);
 	}
-	default public void clearLog(Date endTime, LogLevel level, String type) {
+	default public void clearLog(@NonNull Date endTime, @NonNull LogLevel level, @NonNull String type) {
 		this.clearLog(null, endTime, level, type);
 	}
-	default public void clearLog(Date begTime, Date endTime) {
+	default public void clearLog(@NonNull Date begTime, @NonNull Date endTime) {
 		this.clearLog(begTime, endTime, null, null);
 	}
-	default public void clearLog(Date begTime, Date endTime, LogLevel level) {
+	default public void clearLog(@NonNull Date begTime, @NonNull Date endTime, @NonNull LogLevel level) {
 		this.clearLog(begTime, endTime, level, null);
 	}
-	default public void clearLog(Date begTime, Date endTime, String type) {
+	default public void clearLog(@NonNull Date begTime, @NonNull Date endTime, @NonNull String type) {
 		this.clearLog(begTime, endTime, null, type);
 	}
 	//===============================================
