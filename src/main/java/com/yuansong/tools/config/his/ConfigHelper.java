@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.yuansong.tools.config.log.LogEntity;
+import com.yuansong.tools.config.log.LogLevel;
+
 /**
  * 配置组件接口
  * @author yuansong

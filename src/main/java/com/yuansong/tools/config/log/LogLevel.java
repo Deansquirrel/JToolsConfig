@@ -1,4 +1,4 @@
-package com.yuansong.tools.config.his;
+package com.yuansong.tools.config.log;
 
 public enum LogLevel {
 	Debug,

@@ -1,4 +1,4 @@
-package com.yuansong.tools.config.his;
+package com.yuansong.tools.config.log;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.yuansong.tools.config.conn;
+package com.yuansong.tools.config.config;
 
 import java.io.File;
 
@@ -12,7 +12,7 @@ public interface IConnConfig {
 		if("".equals(this.getDbPath().trim())) {
 			return this.getDbName();
 		} else {
-			return this.getDbPath() + File.separator + this.getDbName();
+			return this.getDbPath().trim() + File.separator + this.getDbName().trim();
 		}
 	}
 	
