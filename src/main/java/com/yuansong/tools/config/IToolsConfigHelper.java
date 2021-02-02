@@ -50,15 +50,15 @@ public interface IToolsConfigHelper {
 	public void saveLog(LogLevel level, String type, String content);
 	public LogEntity getLog(long id);
 	
-	public List<LogEntity> getLog(Date begTime, Date endTime, LogLevel level, String type);
+	public List<LogEntity> getLog(@NonNull Date begTime, @NonNull Date endTime, LogLevel level, String type);
 	
-	default public List<LogEntity> getLog(Date begTime, Date endTime, String type) {
+	default public List<LogEntity> getLog(@NonNull Date begTime, @NonNull Date endTime, String type) {
 		return this.getLog(begTime, endTime, null, type);
 	}
-	default public List<LogEntity> getLog(Date begTime, Date endTime, LogLevel level) {
+	default public List<LogEntity> getLog(@NonNull Date begTime, @NonNull Date endTime, LogLevel level) {
 		return this.getLog(begTime, endTime, level, null);
 	}
-	default public List<LogEntity> getLog(Date begTime, Date endTime) {
+	default public List<LogEntity> getLog(@NonNull Date begTime, @NonNull Date endTime) {
 		return this.getLog(begTime, endTime, null, null);
 	}
 	
