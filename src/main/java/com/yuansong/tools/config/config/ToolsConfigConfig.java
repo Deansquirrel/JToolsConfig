@@ -20,12 +20,12 @@ import com.yuansong.tools.config.IToolsConfigHelper;
 public class ToolsConfigConfig {
 	
 	@Autowired
-	private IConnConfig connConfig;
+	private IToolsConfigConnConfig connConfig;
 
 	@Bean
-	@ConditionalOnMissingBean(IConnConfig.class)
-	public IConnConfig getConnConfig() {
-		return new IConnConfig() {
+	@ConditionalOnMissingBean(IToolsConfigConnConfig.class)
+	public IToolsConfigConnConfig getConnConfig() {
+		return new IToolsConfigConnConfig() {
 
 			@Override
 			public String getDbName() {
