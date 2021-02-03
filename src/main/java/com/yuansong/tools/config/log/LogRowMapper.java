@@ -15,7 +15,7 @@ public class LogRowMapper implements RowMapper<LogEntity> {
 	public LogEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
 		LogEntity d = new LogEntity();
 		d.setId(SQLTool.getLong(rs, "id"));
-		d.setLevel(this.getLogLevel(SQLTool.getString(rs, "level")));
+		d.setLevel(SQLTool.getString(rs, "level"));
 		d.setType(SQLTool.getString(rs, "type"));
 		d.setContent(SQLTool.getString(rs, "content"));
 		try {
@@ -27,21 +27,4 @@ public class LogRowMapper implements RowMapper<LogEntity> {
 		}
 		return d;
 	}
-
-	// 获取日志级别
-	private LogLevel getLogLevel(String level) {
-		switch (level) {
-		case "DEBUG":
-			return LogLevel.Debug;
-		case "INFO":
-			return LogLevel.Info;
-		case "WARN":
-			return LogLevel.Warn;
-		case "ERROR":
-			return LogLevel.Error;
-		default:
-			return LogLevel.Debug;
-		}
-	}
-
 }

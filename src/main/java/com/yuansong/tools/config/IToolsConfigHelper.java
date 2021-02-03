@@ -7,16 +7,20 @@ import java.util.Map;
 import org.springframework.lang.NonNull;
 
 import com.yuansong.tools.config.log.LogEntity;
-import com.yuansong.tools.config.log.LogLevel;
 
 public interface IToolsConfigHelper {
 	
 	public static final long VERSION = 1L;
 	
-	public static final String CONN_NAME = "conn_config";
+	public static final String CONN_NAME = "TOOLSCONFIG_CONN";
 	public static final String BEAN_JDBCTEMPLATE = "jdbcTemplateToolsConfig";
 	public static final String BEAN_TX_MANAGER = "txManagerToolsConfig";
 	public static final String KEY_CLIENT_ID = "clientId";
+	
+	public static final String LOG_LEVEL_DEBUG = "DEBUG";
+	public static final String LOG_LEVEL_INFO = "INFO";
+	public static final String LOG_LEVEL_WARN = "WARN";
+	public static final String LOG_LEVEL_ERROR = "ERROR";
 	
 	public void checkAndInitConfigDb() throws Exception;
 	
@@ -45,9 +49,24 @@ public interface IToolsConfigHelper {
 	public void removeConfig(String name);
 	
 	public Map<String, String> getConfig();
+		
+	public void debug(String content, String type);
+	default public void debug(String content) {
+		this.debug(content, null);
+	}
+	public void info(String content, String type);
+	default public void info(String content) {
+		this.info(content, null);
+	}
+	public void warn(String content, String type);
+	default public void warn(String content) {
+		this.warn(content, null);
+	}
+	public void error(String content, String type);
+	default public void error(String conent) {
+		this.error(conent, null);
+	}
 	
-	//===============================================
-	public void saveLog(LogLevel level, String type, String content);
 	public LogEntity getLog(long id);
 	
 	public List<LogEntity> getLog(@NonNull Date begTime, @NonNull Date endTime, LogLevel level, String type);
@@ -85,6 +104,4 @@ public interface IToolsConfigHelper {
 	default public void clearLog(@NonNull Date begTime, @NonNull Date endTime, @NonNull String type) {
 		this.clearLog(begTime, endTime, null, type);
 	}
-	//===============================================
-
 }

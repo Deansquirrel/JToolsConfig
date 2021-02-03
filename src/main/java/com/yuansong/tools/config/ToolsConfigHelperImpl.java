@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.deansquirrel.tools.common.CommonTool;
 import com.github.deansquirrel.tools.common.DateTool;
 import com.yuansong.tools.config.log.LogEntity;
-import com.yuansong.tools.config.log.LogLevel;
 import com.yuansong.tools.config.log.LogRowMapper;
 
 @Component
@@ -26,7 +25,7 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public void checkAndInitConfigDb() throws Exception {
+	public synchronized void checkAndInitConfigDb() throws Exception {
 		// 检查版本表是否存在
 		if (!this.isTableExists("version")) {
 			this.initConfigDb();
@@ -88,18 +87,18 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	}
 
 	@Override
-	public String getClientId() {
+	public synchronized String getClientId() {
 		return this.getConfig(IToolsConfigHelper.KEY_CLIENT_ID);
 	}
 
 	@Override
-	public void updateClientId(String clientId) {
+	public synchronized void updateClientId(String clientId) {
 		this.saveConfig(IToolsConfigHelper.KEY_CLIENT_ID, clientId);
 	}
 
 	@Override
 	@Transactional(value = IToolsConfigHelper.BEAN_TX_MANAGER)
-	public void saveConfig(String name, String val, String description) {
+	public synchronized void saveConfig(String name, String val, String description) {
 		String sqlUpdate = "" + "UPDATE config SET val=?,description=?,last_update=? WHERE name= ? ";
 		String sqlInsert = "" + "INSERT INTO config (name, val, description, last_update) " + "SELECT ?, ?, ?, ? "
 				+ "WHERE (Select Changes() = 0)";
@@ -108,7 +107,7 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	}
 
 	@Override
-	public String getConfig(String name, String def) {
+	public synchronized String getConfig(String name, String def) {
 		String sql = "select val from config where name = ?";
 		List<String> list = this.jdbcTemplate.queryForList(sql, new Object[] { name }, String.class);
 		if (list.size() > 0) {
@@ -119,7 +118,7 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	}
 
 	@Override
-	public Map<String, String> getConfig() {
+	public synchronized Map<String, String> getConfig() {
 		String sql = "select name, val from config";
 		List<Map<String, Object>> list = this.jdbcTemplate.queryForList(sql);
 		HashMap<String, String> result = new HashMap<String, String>();
@@ -130,13 +129,32 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	}
 
 	@Override
-	public void removeConfig(String name) {
+	public synchronized void removeConfig(String name) {
 		String sql = "DELETE FROM config WHERE name = ?";
 		this.jdbcTemplate.update(sql, name);
 	}
 
 	@Override
-	public void saveLog(LogLevel level, String type, String content) {
+	public synchronized void debug(String content, String type) {
+		this.saveLog(LogLevel.Debug, type, content);
+	}
+
+	@Override
+	public synchronized void info(String content, String type) {
+		this.saveLog(LogLevel.Info, type, content);
+	}
+
+	@Override
+	public synchronized void warn(String content, String type) {
+		this.saveLog(LogLevel.Warn, type, content);
+	}
+
+	@Override
+	public synchronized void error(String content, String type) {
+		this.saveLog(LogLevel.Error, type, content);
+	}
+	
+	private void saveLog(LogLevel level, String type, String content) {
 		String sql = "INSERT INTO log(level, type, content, time) SELECT ?, ?, ?, ?";
 		this.jdbcTemplate.update(sql, this.getLogLevel(level), type, content, DateTool.GetDateTimeStr());
 	}
@@ -145,20 +163,20 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	private String getLogLevel(LogLevel level) {
 		switch (level) {
 		case Debug:
-			return "DEBUG";
+			return IToolsConfigHelper.LOG_LEVEL_DEBUG;
 		case Info:
-			return "INFO";
+			return IToolsConfigHelper.LOG_LEVEL_INFO;
 		case Warn:
-			return "WARN";
+			return IToolsConfigHelper.LOG_LEVEL_WARN;
 		case Error:
-			return "ERROR";
+			return IToolsConfigHelper.LOG_LEVEL_ERROR;
 		default:
-			return "DEBUG";
+			return IToolsConfigHelper.LOG_LEVEL_DEBUG;
 		}
 	}
 
 	@Override
-	public LogEntity getLog(long id) {
+	public synchronized LogEntity getLog(long id) {
 		String sql = "" + "SELECT id, level, type, content, time " + "FROM log " + "WHERE id = ?";
 
 		List<LogEntity> list = this.jdbcTemplate.query(sql, new Object[] { id }, new LogRowMapper());
@@ -170,7 +188,7 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	}
 
 	@Override
-	public List<LogEntity> getLog(Date begTime, Date endTime, LogLevel level, String type) {
+	public synchronized List<LogEntity> getLog(Date begTime, Date endTime, LogLevel level, String type) {
 		List<Object> arg = new ArrayList<Object>();
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT id, level, type, content, time " + "FROM log " + "WHERE 1=1 ");
@@ -194,13 +212,13 @@ class ToolsConfigHelperImpl implements IToolsConfigHelper {
 	}
 
 	@Override
-	public void clearLog(long id) {
+	public synchronized void clearLog(long id) {
 		String sql = "delete from log where id = ?";
 		this.jdbcTemplate.update(sql, id);
 	}
 
 	@Override
-	public void clearLog(Date begTime, Date endTime, LogLevel level, String type) {
+	public synchronized void clearLog(Date begTime, Date endTime, LogLevel level, String type) {
 		List<Object> arg = new ArrayList<Object>();
 		StringBuilder sb = new StringBuilder();
 		sb.append("DELETE FROM log " + "WHERE 1=1 ");

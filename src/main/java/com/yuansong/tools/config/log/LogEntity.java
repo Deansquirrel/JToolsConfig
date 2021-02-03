@@ -5,7 +5,7 @@ import java.util.Date;
 public class LogEntity {
 	
 	private long id;
-	private LogLevel level;
+	private String level;
 	private String type;
 	private String content;
 	private Date time;
@@ -34,10 +34,10 @@ public class LogEntity {
 	public void setTime(Date time) {
 		this.time = time;
 	}
-	public LogLevel getLevel() {
+	public String getLevel() {
 		return level;
 	}
-	public void setLevel(LogLevel level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 
