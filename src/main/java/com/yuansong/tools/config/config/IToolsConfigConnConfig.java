@@ -2,7 +2,7 @@ package com.yuansong.tools.config.config;
 
 import java.io.File;
 
-public interface IConnConfig {
+public interface IToolsConfigConnConfig {
 
 	public String getDbName();
 	
